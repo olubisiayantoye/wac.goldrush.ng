@@ -1,0 +1,27 @@
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore node_modules (for JavaScript/Node.js projects)
+node_modules/
+
+# Ignore Python virtual environments
+/venv/
+/__pycache__/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Build artifacts
+/dist/
+/build/
+/out/
+
+# IDE specific files
+/.idea/
+/.vscode/
