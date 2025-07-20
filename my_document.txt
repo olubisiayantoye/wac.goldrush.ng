@@ -48,3 +48,77 @@ docker --version
 
 Run the install command prefixed with sudo like this:
 curl -fsSL https://get.coollabs.io/coolify/install.sh | sudo bash
+
+
+docker network create mysql-network
+
+
+
+
+/////////////////////////////////////////////////////////////
+ Step-by-Step: MySQL + phpMyAdmin (No Docker Compose)
+🔹 Step 1: Create a Docker Network
+This lets phpMyAdmin and MySQL talk to each other:
+
+
+docker network create mysql-network
+🔹 Step 2: Run MySQL container
+Replace yourpassword with something strong:
+
+
+docker run -d \
+  --name mysql-db \
+  --network mysql-network \
+  -e MYSQL_ROOT_PASSWORD=TVyjQBWYgpaxxACH1jtAKNdp \
+  -e MYSQL_DATABASE=whatsapp_crm \
+  -e MYSQL_USER=crmuser \
+  -e MYSQL_PASSWORD=gUbircxwz19Q8GKLZ2XV8DHc \
+  -p 3306:3306 \
+  mysql:8
+
+
+🔹 Step 3: Run phpMyAdmin container
+
+docker run -d \
+  --name phpmyadmin \
+  --network mysql-network \
+  -e PMA_HOST=mysql-db \
+  -e PMA_PORT=3306 \
+  -p 8081:80 \
+  phpmyadmin/phpmyadmin
+🔹 Step 4: Access phpMyAdmin in Browser
+Open:
+
+cpp
+Copy
+Edit
+http://<your-server-ip>:8081
+Example: http://172.184.197.45:8081
+
+✅ Login Info
+Field	Value
+Server	mysql-db
+Username	crmuser (or root)
+Password	yourpassword
+
+
+Install via Docker (1 Command)
+Run this on your Coolify server (SSH/PowerShell):
+
+bash
+docker run -d \
+  --name adminer \
+  -p 8080:8080 \
+  --restart unless-stopped \
+  adminer:latest
+Access: http://<your-server-ip>:8080
+
+
+docker run -d \
+  --name my-mysql \
+  -e MYSQL_ROOT_PASSWORD=TVyjQBWYgpaxxACH1jtAKNdp \
+  -e MYSQL_DATABASE=whatsapp_crm \
+  -e MYSQL_USER=crmuser \
+  -e MYSQL_PASSWORD=gUbircxwz19Q8GKLZ2XV8DHc \
+  -p 9000:3306 \
+  bitnami/mysql:8.0
