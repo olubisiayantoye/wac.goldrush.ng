@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { query } = require("../database/dbpromise.js");
 const randomstring = require("randomstring");
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs'); //require("bcrypt");
 const {
   getUserPlayDays,
   sendAPIMessage,
