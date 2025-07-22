@@ -75,7 +75,7 @@ app.get("*", function (request, response) {
 
 const server = app.listen(process.env.PORT || 3010, () => {
   console.log(`WaCrm server is running on port ${process.env.PORT}`);
- / init();
+  init();
   setTimeout(() => {
     runCampaign();
     warmerLoopInit();
