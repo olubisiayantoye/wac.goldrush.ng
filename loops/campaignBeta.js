@@ -49,27 +49,23 @@ async function initCampaign() {
 async function processPendingCampaigns() {
   try {
     // Get all users with pending campaigns
-    /*const usersWithPendingCampaigns = await query(
+   /* const usersWithPendingCampaigns = await query(
       `SELECT DISTINCT uid FROM beta_campaign 
        WHERE status = 'PENDING' OR status = 'IN_PROGRESS'
        ORDER BY createdAt ASC`,
       []
     ); */
 
-    // Get all users with pending campaigns
-const usersWithPendingCampaigns = await query(
+    const usersWithPendingCampaigns = await query(
   `SELECT uid FROM (
-     SELECT uid, createdAt FROM beta_campaign 
+     SELECT uid, MIN(createdAt) as minCreatedAt
+     FROM beta_campaign
      WHERE status = 'PENDING' OR status = 'IN_PROGRESS'
-     ORDER BY createdAt ASC
-   ) as sorted_users
-   GROUP BY uid`,
+     GROUP BY uid
+   ) AS sub
+   ORDER BY minCreatedAt ASC`,
   []
 );
-
-
-
-
 
 
     if (!usersWithPendingCampaigns || usersWithPendingCampaigns.length === 0) {
